@@ -1,0 +1,49 @@
+{% extends "base.html" %} {% block title %}Problem1{% endblock %} {% block body %}
+<div class="content-section">
+    <div class="center">
+        <h1>Graph for Problem 1</h1>
+        <div>
+            <div>
+                <form class="form-inline" id='form1'>
+                    <h3>Select the teams here:</h3> <br> {% for key in dict_data %}
+                    <label class="checkbox-inline">{{ key }}</label>
+                    <input type="checkbox" id="{{ forloop.counter0 }}" value="{{ key }}" checked> {% endfor %}
+                    <br>
+                    <div class="flex_box">
+                        <div>
+                            <h4>Select start</h4>
+                            <select name="runs" class="form-control select-checkbox fav" id="start">
+                          <option value="0" selected="selected">0</option>
+                          <option value="5000">5000</option>
+                          <option value="10000">10000</option>
+                          <option value="15000">15000</option>
+                          <option value="20000">20000</option>
+                          <option value="25000">25000</option>
+                        </select>
+                        </div>
+                        <div>
+                            <h4>Select end</h4>
+                            <select name="runs" class="form-control select-checkbox fav" id="end">
+                          <option value="5000">5000</option>
+                          <option value="10000">10000</option>
+                          <option value="15000">15000</option>
+                          <option value="20000">20000</option>
+                          <option value="25000">25000</option>
+                          <option value="30000" selected="selected">30000</option>
+                        </select>
+                        </div>
+                    </div>
+                    <br>
+                    <button type="submit" class="btn btn-default">Show Graph</button>
+                </form>
+
+            </div>
+            <div id="container"></div>
+            <script src="https://code.highcharts.com/highcharts.src.js"></script>
+            {% load static %}
+            <script src="{% static 'js/problem1.js' %}"></script>
+        </div>
+        <br/>
+    </div>
+</div>
+{% endblock %}
