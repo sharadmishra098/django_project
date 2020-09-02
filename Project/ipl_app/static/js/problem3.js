@@ -1,27 +1,3 @@
-var rangeByCategory = {
-    0: ["5000", "10000", "15000", "20000", "25000", "30000"],
-    5000: ["10000", "15000", "20000", "25000", "30000"],
-    10000: ["15000", "20000", "25000", "30000"],
-    15000: ["20000", "25000", "30000"],
-    20000: ["25000", "30000"],
-    25000: ["30000"]
-}
-
-function changecat(value) {
-    if (value.length == 0) document.getElementById("end").innerHTML = "<option></option>";
-    else {
-        var catOptions = "";
-        for (categoryId in rangeByCategory[value]) {
-            catOptions += "<option " + "value='" + rangeByCategory[value][categoryId] + "'>" + rangeByCategory[value][categoryId] + "</option>";
-        }
-        document.getElementById("end").innerHTML = catOptions;
-    }
-}
-var start = 0
-var end = 30000
-    //var teams = ['Kochi Tuskers Kerala', 'Rising Pune Supergiant', 'Gujarat Lions', 'Pune Warriors', 'Deccan Chargers', 'Sunrisers Hyderabad', 'Rajasthan Royals', 'Chennai Super Kings', 'Delhi Daredevils', 'Kolkata Knight Riders', 'Kings XI Punjab', 'Royal Challengers Bangalore', 'Mumbai Indians']
-var selected_team = []
-
 function getCookie(name) {
     var cookieValue = null;
     if (document.cookie && document.cookie !== "") {
@@ -37,6 +13,7 @@ function getCookie(name) {
     return cookieValue;
 }
 var csrftoken = getCookie('csrftoken')
+var selected_country = []
 fetch_json()
 
 var form = document.getElementById("form1")
@@ -46,24 +23,20 @@ form.addEventListener('submit', function(e) {
 });
 
 function get_data() {
-    start = document.forms['form1'].elements['start'].value
-    end = document.forms['form1'].elements['end'].value
-    team_inputs = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
-    selected_team = []
-    for (let item in team_inputs) {
-        if (document.getElementById(item).checked) {
-            selected_team.push(document.getElementById(item).value)
+    selected_country = [];
+    for (var option of document.getElementById('country').options) {
+        if (option.selected) {
+            selected_country.push(option.value);
         }
     }
+
     fetch_json()
-    console.log(start)
-    console.log(end)
-    console.log(selected_team)
 }
+console.log(selected_country)
 
 function fetch_json() {
-    url = 'http://127.0.0.1:8000/plot1/'
-    data = { selected_team, start, end }
+    url = 'http://127.0.0.1:8000/plot3/'
+    data = { selected_country }
     fetch(url, {
             method: 'POST',
             headers: {
@@ -73,35 +46,37 @@ function fetch_json() {
             body: JSON.stringify(data)
         }).then((response) => response.json())
         .then((data) => {
+            console.log(data['selected_country'])
             plot_chart(data)
         })
 }
 
 function plot_chart(data) {
+    console.log(Object.keys(data))
     Highcharts.chart("container", {
         chart: {
             type: 'column'
         },
         title: {
-            text: 'Teams V/S their Scores'
+            text: 'Countries V/S number of umpires'
         },
         xAxis: {
             categories: Object.keys(data),
             crosshair: true,
             title: {
-                text: 'Teams'
+                text: 'Countries'
             }
         },
         yAxis: {
             min: 0,
             title: {
-                text: 'Runs Scored'
+                text: 'Number of Umpires'
             }
         },
         tooltip: {
             headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
             pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.0f} runs</b></td></tr>',
+                '<td style="padding:0"><b>{point.y:.0f} </b></td></tr>',
             footerFormat: '</table>',
             shared: true,
             useHTML: true
@@ -113,7 +88,7 @@ function plot_chart(data) {
             }
         },
         series: [{
-            name: 'Scores',
+            name: 'No. of Umpires',
             data: Object.values(data)
 
         }]

@@ -1,0 +1,54 @@
+{% extends "base.html" %} {% block title %}Problem2{% endblock %} {% block body %}
+<div class="content-section">
+    <div>
+        <div class='center'>
+            <h1>Graph for Problem 2</h1>
+        </div>
+        <div>
+            <div class="col-8 d-flex justify-content-center text-center">
+                <form class="form-inline" id='form1'>
+                    <h3>Select the batsman:</h3>
+                    <select id="batsman" multiple="multiple" size="7">
+                    {% for key in dict_data %}
+                    <option value="{{ key }}" id="{{ forloop.counter0 }}" selected>{{ key }}</option>
+                    {% endfor %}
+                    </select>
+                    <br>
+                    <div class="row">
+                        <h2>Select the Range of scores:</h2>
+                        <div class="col-md-6">
+                            <h3>Select start</h3>
+                            <select name="runs" class="form-control select-checkbox fav" id="start" onChange="changecat(this.value);">
+                                <option value="0">0</option>
+                                <option value="500">500</option>
+                                <option value="1000">1000</option>
+                                <option value="1500">1500</option>
+                                <option value="2000">2000</option>
+                                <option value="2500">2500</option>
+                                <option value="3000">3000</option>
+                                <option value="3500">3500</option>
+                                <option value="4000">4000</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <h3>Select end</h3>
+                            <select name="runs" class="form-control select-checkbox fav" id="end">
+                                <option value="4500" selected>4500</option>
+                            </select>
+                        </div>
+                    </div>
+                    <br>
+                    <button type="submit" class="btn btn-default">Show Graph</button>
+                </form>
+            </div>
+            <div id="container"></div>
+            <script src="https://code.highcharts.com/highcharts.src.js"></script>
+            <script src="https://code.highcharts.com/modules/exporting.js"></script>
+            <script src="https://code.highcharts.com/modules/export-data.js"></script>
+            {% load static %}
+            <script src="{% static 'js/problem2.js' %}"></script>
+        </div>
+        <br/>
+    </div>
+</div>
+{% endblock %}

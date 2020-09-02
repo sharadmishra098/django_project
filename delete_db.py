@@ -8,7 +8,9 @@ load_dotenv()
 
 def make_db():
     """Function to create database"""
-    url = os.getenv("DATABASE_URL")
+    user = os.getenv("USER_NAME")
+    password = os.getenv("PASSWORD")
+    url = 'postgresql://'+user+':'+password+'@localhost/ipl_data'
     engine = create_engine(url)
     if database_exists(engine.url):
         drop_database(engine.url)

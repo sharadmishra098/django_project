@@ -1,0 +1,30 @@
+{% extends "base.html" %} {% block title %}Problem3{% endblock %} {% block body %}
+<div class="content-section">
+    <div class="center">
+        <h1>Graph for Problem 3</h1>
+        <div>
+            <div class="col-8 d-flex justify-content-center text-center">
+                <form class="form-inline" id='form1'>
+                    <div>
+                        <h3>Select the country:</h3>
+                        <select id="country" multiple="multiple" size="7">
+                        {% for key in dict_data %}
+                        <option value="{{ key }}" id="{{ forloop.counter0 }}" selected>{{ key }}</option>
+                        {% endfor %}
+                        </select>
+                    </div>
+                    <br>
+                    <button type="submit" class="btn btn-default">Show Graph</button>
+                </form>
+            </div>
+            <div id="container"></div>
+        </div>
+        <br/>
+    </div>
+</div>
+<script src="https://code.highcharts.com/highcharts.src.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+{% load static %}
+<script src="{% static 'js/problem3.js' %}"></script>
+{% endblock %}

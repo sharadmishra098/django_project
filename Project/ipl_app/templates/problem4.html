@@ -1,0 +1,41 @@
+{% extends "base.html" %} {% block title %}Problem4{% endblock %} {% block body %}
+<div class="content-section">
+    <div class="center">
+        <h1>Graph for Problem 4</h1>
+        <div>
+            <div class="col-8 d-flex justify-content-center text-center">
+                <form class="form-inline" id='form1'>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h3>Select the season:</h3>
+                            <select id="season" multiple="multiple" size="7">
+                            {% for key in dict_data %}
+                            <option value="{{ key }}" id="{{ forloop.counter0 }}" selected>{{ key }}</option>
+                            {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <h3>Select the teams:</h3>
+                            <select id="team" multiple="multiple" size="7">
+                            {% for key in teams %}
+                            <option value="{{ key }}" id="{{ forloop.counter0 }}" selected>{{ key }}</option>
+                            {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <br>
+                    <button type="submit" class="btn btn-default">Show Graph</button>
+                </form>
+
+            </div>
+            <div id="container"></div>
+            <script src="https://code.highcharts.com/highcharts.src.js"></script>
+            <script src="https://code.highcharts.com/modules/exporting.js"></script>
+            <script src="https://code.highcharts.com/modules/export-data.js"></script>
+            {% load static %}
+            <script src="{% static 'js/problem4.js' %}"></script>
+        </div>
+        <br/>
+    </div>
+</div>
+{% endblock %}

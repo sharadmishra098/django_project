@@ -18,7 +18,13 @@ from django.urls import path
 from ipl_app.views import (
     home_view,
     team_total,
-    total_team_runs
+    total_team_runs,
+    rcb_batsman,
+    rcb_batsman_plot,
+    umpire,
+    umpire_plot,
+    season,
+    season_plot
 )
 
 urlpatterns = [
@@ -26,4 +32,10 @@ urlpatterns = [
     path('', home_view, name='home'),
     path('problem1/', team_total, name='problem1'),
     path('plot1/', total_team_runs, name='plot1'),
+    path('problem2/', rcb_batsman, name='problem2'),
+    path('plot2/', rcb_batsman_plot, name='plot2'),
+    path('problem3/', umpire, name='problem3'),
+    path('plot3/', umpire_plot, name='plot3'),
+    path('problem4/', season, name='problem4'),
+    path('plot4/', season_plot, name='plot4'),
 ]

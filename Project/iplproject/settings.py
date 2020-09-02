@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 """
 
 import os
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -74,12 +75,13 @@ WSGI_APPLICATION = 'iplproject.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
+load_dotenv()
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'ipl_data',
-        'USER': 'user1',
-        'PASSWORD': '123',
+        'USER': os.getenv("USER_NAME"),
+        'PASSWORD': os.getenv("PASSWORD"),
         'HOST': 'localhost',
         'PORT': '',
     }

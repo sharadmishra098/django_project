@@ -1,10 +1,13 @@
 var rangeByCategory = {
-    0: ["5000", "10000", "15000", "20000", "25000", "30000"],
-    5000: ["10000", "15000", "20000", "25000", "30000"],
-    10000: ["15000", "20000", "25000", "30000"],
-    15000: ["20000", "25000", "30000"],
-    20000: ["25000", "30000"],
-    25000: ["30000"]
+    0: ["100", "200", "300", "500", "1000", "1500", "2000", "2500", "3000", "3500", "4000", "4500"],
+    500: ["1000", "1500", "2000", "2500", "3000", "3500", "4000", "4500"],
+    1000: ["1500", "2000", "2500", "3000", "3500", "4000", "4500"],
+    1500: ["2000", "2500", "3000", "3500", "4000", "4500"],
+    2000: ["2500", "3000", "3500", "4000", "4500"],
+    2500: ["3000", "3500", "4000", "4500"],
+    3000: ["3500", "4000", "4500"],
+    3500: ["4000", "4500"],
+    4000: ["4500"]
 }
 
 function changecat(value) {
@@ -17,10 +20,6 @@ function changecat(value) {
         document.getElementById("end").innerHTML = catOptions;
     }
 }
-var start = 0
-var end = 30000
-    //var teams = ['Kochi Tuskers Kerala', 'Rising Pune Supergiant', 'Gujarat Lions', 'Pune Warriors', 'Deccan Chargers', 'Sunrisers Hyderabad', 'Rajasthan Royals', 'Chennai Super Kings', 'Delhi Daredevils', 'Kolkata Knight Riders', 'Kings XI Punjab', 'Royal Challengers Bangalore', 'Mumbai Indians']
-var selected_team = []
 
 function getCookie(name) {
     var cookieValue = null;
@@ -37,6 +36,9 @@ function getCookie(name) {
     return cookieValue;
 }
 var csrftoken = getCookie('csrftoken')
+var selected_batsman = []
+var start = 0
+var end = 4500
 fetch_json()
 
 var form = document.getElementById("form1")
@@ -48,22 +50,21 @@ form.addEventListener('submit', function(e) {
 function get_data() {
     start = document.forms['form1'].elements['start'].value
     end = document.forms['form1'].elements['end'].value
-    team_inputs = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
-    selected_team = []
-    for (let item in team_inputs) {
-        if (document.getElementById(item).checked) {
-            selected_team.push(document.getElementById(item).value)
+    selected_batsman = [];
+    for (var option of document.getElementById('batsman').options) {
+        if (option.selected) {
+            selected_batsman.push(option.value);
         }
     }
-    fetch_json()
+    console.log(selected_batsman)
     console.log(start)
     console.log(end)
-    console.log(selected_team)
+    fetch_json()
 }
 
 function fetch_json() {
-    url = 'http://127.0.0.1:8000/plot1/'
-    data = { selected_team, start, end }
+    url = 'http://127.0.0.1:8000/plot2/'
+    data = { selected_batsman, start, end }
     fetch(url, {
             method: 'POST',
             headers: {
@@ -83,13 +84,13 @@ function plot_chart(data) {
             type: 'column'
         },
         title: {
-            text: 'Teams V/S their Scores'
+            text: 'RCB Batsman V/S their Scores'
         },
         xAxis: {
             categories: Object.keys(data),
             crosshair: true,
             title: {
-                text: 'Teams'
+                text: 'Batsman'
             }
         },
         yAxis: {
@@ -113,7 +114,7 @@ function plot_chart(data) {
             }
         },
         series: [{
-            name: 'Scores',
+            name: 'scores',
             data: Object.values(data)
 
         }]
