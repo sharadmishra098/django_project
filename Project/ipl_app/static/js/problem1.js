@@ -17,26 +17,7 @@ function changecat(value) {
         document.getElementById("end").innerHTML = catOptions;
     }
 }
-var start = 0
-var end = 30000
-    //var teams = ['Kochi Tuskers Kerala', 'Rising Pune Supergiant', 'Gujarat Lions', 'Pune Warriors', 'Deccan Chargers', 'Sunrisers Hyderabad', 'Rajasthan Royals', 'Chennai Super Kings', 'Delhi Daredevils', 'Kolkata Knight Riders', 'Kings XI Punjab', 'Royal Challengers Bangalore', 'Mumbai Indians']
 var selected_team = []
-
-function getCookie(name) {
-    var cookieValue = null;
-    if (document.cookie && document.cookie !== "") {
-        var cookies = document.cookie.split(";");
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === name + "=") {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
-var csrftoken = getCookie('csrftoken')
 fetch_json()
 
 var form = document.getElementById("form1")
@@ -61,21 +42,15 @@ function get_data() {
     console.log(selected_team)
 }
 
+
 function fetch_json() {
-    url = 'http://127.0.0.1:8000/plot1/'
-    data = { selected_team, start, end }
-    fetch(url, {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json",
-                "X-CSRFToken": csrftoken,
-            },
-            body: JSON.stringify(data)
-        }).then((response) => response.json())
-        .then((data) => {
-            plot_chart(data)
-        })
+    var data = [selected_team, start, end]
+    var url = `http://127.0.0.1:8000/plot1?data=${data}`
+    fetch(url).then(response => response.json().then(function(data) {
+        plot_chart(data);
+    }));
 }
+
 
 function plot_chart(data) {
     Highcharts.chart("container", {

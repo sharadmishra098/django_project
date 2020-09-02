@@ -1,18 +1,3 @@
-function getCookie(name) {
-    var cookieValue = null;
-    if (document.cookie && document.cookie !== "") {
-        var cookies = document.cookie.split(";");
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === name + "=") {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
-var csrftoken = getCookie('csrftoken')
 var selected_seasons = []
 var selected_teams = []
 fetch_json()
@@ -42,36 +27,16 @@ function get_data() {
 }
 
 function fetch_json() {
-    url = 'http://127.0.0.1:8000/plot4/'
-    data = { selected_seasons, selected_teams }
-    fetch(url, {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json",
-                "X-CSRFToken": csrftoken,
-            },
-            body: JSON.stringify(data)
-        }).then((response) => response.json())
-        .then((data) => {
-            plot_chart(data)
-        })
+    var data = [selected_seasons, selected_teams]
+    var url = `http://127.0.0.1:8000/plot4?data=${data}`
+    fetch(url).then(response => response.json().then(function(data) {
+        plot_chart(data);
+    }));
 }
 
 function plot_chart(data) {
     series_data_list = []
-    if (selected_teams) {
-        var teams = selected_teams
-    } else {
-        teams = ['Gujarat Lions', 'Rising Pune Supergiant',
-            'Royal Challengers Bangalore',
-            'Kolkata Knight Riders', 'Delhi Daredevils',
-            'Sunrisers Hyderabad',
-            'Kings XI Punjab', 'Mumbai Indians', 'Chennai Super Kings',
-            'Rajasthan Royals', 'Deccan Chargers', 'Pune Warriors',
-            'Kochi Tuskers Kerala'
-        ]
-    }
-    //var teams = selected_teams
+    var teams = selected_teams
     var team_list = [];
     for (var year of Object.keys(data)) {
         let score = [];

@@ -1,18 +1,3 @@
-function getCookie(name) {
-    var cookieValue = null;
-    if (document.cookie && document.cookie !== "") {
-        var cookies = document.cookie.split(";");
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === name + "=") {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
-var csrftoken = getCookie('csrftoken')
 var selected_country = []
 fetch_json()
 
@@ -35,20 +20,11 @@ function get_data() {
 console.log(selected_country)
 
 function fetch_json() {
-    url = 'http://127.0.0.1:8000/plot3/'
-    data = { selected_country }
-    fetch(url, {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json",
-                "X-CSRFToken": csrftoken,
-            },
-            body: JSON.stringify(data)
-        }).then((response) => response.json())
-        .then((data) => {
-            console.log(data['selected_country'])
-            plot_chart(data)
-        })
+    var data = [selected_country]
+    var url = `http://127.0.0.1:8000/plot3?data=${data}`
+    fetch(url).then(response => response.json().then(function(data) {
+        plot_chart(data);
+    }));
 }
 
 function plot_chart(data) {

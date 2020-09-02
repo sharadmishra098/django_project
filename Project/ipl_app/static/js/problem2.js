@@ -21,24 +21,7 @@ function changecat(value) {
     }
 }
 
-function getCookie(name) {
-    var cookieValue = null;
-    if (document.cookie && document.cookie !== "") {
-        var cookies = document.cookie.split(";");
-        for (var i = 0; i < cookies.length; i++) {
-            var cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === name + "=") {
-                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                break;
-            }
-        }
-    }
-    return cookieValue;
-}
-var csrftoken = getCookie('csrftoken')
 var selected_batsman = []
-var start = 0
-var end = 4500
 fetch_json()
 
 var form = document.getElementById("form1")
@@ -62,20 +45,13 @@ function get_data() {
     fetch_json()
 }
 
+
 function fetch_json() {
-    url = 'http://127.0.0.1:8000/plot2/'
-    data = { selected_batsman, start, end }
-    fetch(url, {
-            method: 'POST',
-            headers: {
-                "Content-Type": "application/json",
-                "X-CSRFToken": csrftoken,
-            },
-            body: JSON.stringify(data)
-        }).then((response) => response.json())
-        .then((data) => {
-            plot_chart(data)
-        })
+    var data = [selected_batsman, start, end]
+    var url = `http://127.0.0.1:8000/plot2?data=${data}`
+    fetch(url).then(response => response.json().then(function(data) {
+        plot_chart(data);
+    }));
 }
 
 function plot_chart(data) {

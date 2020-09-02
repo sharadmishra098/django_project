@@ -55,7 +55,7 @@ a:hover,
     padding-bottom: 50px;
     text-align: center;
     color: #f8f8f8;
-    background: url(..css/IPL-Trophy.jpg) no-repeat center center;
+    background: url(./IPL-Trophy.jpg) no-repeat center center;
     background-size: cover;
     height: 100%;
 }
