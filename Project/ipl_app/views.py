@@ -11,6 +11,9 @@ def home_view(request):
 
 
 def total_team_runs(request):
+    """
+    function to apply filters
+    """
     url_data = request.GET['data']
     input_data = list(url_data.split(','))
     selected_team = input_data[:-2]
@@ -40,6 +43,9 @@ def total_team_runs(request):
 
 
 def team_total(request):
+    """
+    function to render template
+    """
     dataset = Delivery.objects.values("batting_team")\
         .annotate(total_runs=Sum("total_runs"))\
         .order_by("total_runs")
@@ -51,6 +57,9 @@ def team_total(request):
 
 
 def rcb_batsman(request):
+    """
+    function to render template
+    """
     dataset = (
         Delivery.objects.values('batsman')
         .filter(batting_team='Royal Challengers Bangalore')
@@ -64,6 +73,9 @@ def rcb_batsman(request):
 
 
 def rcb_batsman_plot(request):
+    """
+    function to apply filters
+    """
     url_data = request.GET['data']
     input_data = list(url_data.split(','))
     selected_batsman = input_data[:-2]
@@ -94,6 +106,9 @@ def rcb_batsman_plot(request):
 
 
 def umpire(request):
+    """
+    function to render template
+    """
     dataset = (
         Umpire.objects.values('nationality')
         .exclude(nationality='India')
@@ -107,6 +122,9 @@ def umpire(request):
 
 
 def umpire_plot(request):
+    """
+    function to apply filters
+    """
     url_data = request.GET['data']
     input_data = list(url_data.split(','))
 
@@ -134,6 +152,9 @@ def umpire_plot(request):
 
 
 def season(request):
+    """
+    function to render template
+    """
     dataset = (
         Match.objects.values('season', 'team1', 'team2')
         .order_by('season')
@@ -156,6 +177,9 @@ def season(request):
 
 
 def season_plot(request):
+    """
+    function to apply filters
+    """
     url_data = request.GET['data']
     input_data = list(url_data.split(','))
     selected_seasons = [x for x in input_data if x.isdigit()]

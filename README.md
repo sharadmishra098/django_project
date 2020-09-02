@@ -25,7 +25,7 @@ Analysis of IPL data.
 1. Give your database superuser credentials in ```.env``` file.
 2. Create the database.
    > python3 create_db.py
-3. Now go to ```Project``` folder.
+3. Now go to ```Project``` directory.
    > cd Project
 4. Create tables.
    > python manage.py makemigrations \
