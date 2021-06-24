@@ -7,7 +7,7 @@ Analysis of IPL data.
 * Bootstrap
 * Python3
 * Django
-## Database 
+## Database Used
 * PostgreSQL Database
 
 ## Create Virtual environment
