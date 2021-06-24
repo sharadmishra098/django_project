@@ -41,4 +41,4 @@ Analysis of IPL data.
 10. Now deactivate the virtual environment by ```deactivate``` command.
    
 # Author
-Sharad Mishra - _sharad.mishra@mountblue.tech_
+Sharad Mishra - _sharadgkp26@gmail.com_
